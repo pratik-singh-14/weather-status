@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather app
+    </title>
+     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron&family=Audiowide&family=Rajdhani&family=Chakra+Petch&family=Syncopate&family=Major+Mono+Display&family=VT323&family=Press+Start+2P&family=Share+Tech+Mono&family=Quantico&family=Merriweather&family=Libre+Baskerville&family=Source+Serif+4&family=Roboto+Slab&family=Playfair+Display&family=IBM+Plex+Serif&family=DM+Serif+Display&family=Mulish&family=Inter&family=Work+Sans&display=swap" rel="stylesheet">
+     <script src="https://kit.fontawesome.com/cbcc2cb107.js" crossorigin="anonymous"></script> 
+
+</head>
+<style> {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: black;
+    font-family: Arial, sans-serif;
+}
+
+.card {
+    width: 90%;
+    max-width: 470px;
+    background: linear-gradient(125deg, purple, indigo, navy);
+    color: white;
+    margin: 50px auto;
+    border-radius: 25px;
+    padding: 30px 20px;
+    text-align: center;
+}
+
+
+.search {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.search input {
+    border: 0;
+    outline: 0;
+    font-family: 'Libre Baskerville', serif;
+    background: black;
+    color: white;
+    padding: 10px 25px;
+    height: 50px;
+    flex: 1;
+    margin-right: 12px;
+    font-size: 16px;
+    border-radius: 30px;
+}
+
+.search button {
+    border: 0;
+    outline: 0;
+    background: black;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+
+#cloud {
+    font-size: 12vw; 
+    margin-top: 50px;
+    color: white;
+}
+
+@media (min-width: 500px) {
+    #cloud {
+        font-size: 90px; 
+    }
+}
+
+@media (max-width: 350px) {
+    #cloud {
+        font-size: 80px; 
+    }
+}
+
+
+.weather {
+    display: none; 
+}
+
+.weather h1 {
+    font-size: 20vw; 
+    font-weight: 500;
+    color: white;
+    margin: 10px 0 0 0;
+    font-family: 'Merriweather', serif;
+}
+
+.weather h2 {
+    font-size: 10vw;
+    font-weight: 400;
+    color: white;
+    margin-top: 25px; 
+    font-family: 'Libre Baskerville', serif;
+}
+
+
+.details {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    margin-top: 30px;
+    flex-wrap: wrap; 
+}
+
+.col {
+    display: flex;
+    align-items: center;
+    text-align: left;
+    margin-bottom: 10px;
+}
+
+.col i {
+    margin-right: 10px;
+    color: white;
+    font-size:8vw;
+    
+}
+
+.humidity,
+.wind {
+    font-size: 18px;
+    margin-top: -4px;
+    color: white;
+    font-family: 'Libre Baskerville', serif;
+}
+
+
+@media (max-width: 400px) {
+    .search input {
+        font-size: 14px;
+        padding: 8px 20px;
+        height: 45px;
+    }
+
+    .search button {
+        width: 45px;
+        height: 45px;
+    }
+
+    .details {
+        padding: 0 10px;
+    }
+
+    .humidity,
+    .wind {
+        font-size: 16px;
+    }
+}</style>
+<body>
+    <div class="card">
+        <div class="search">
+            <input type="text" placeholder="Enter the city name" spellcheck="false">
+     <button><i class="fa-solid fa-magnifying-glass"></i>
+</button>
+        </div>
+
+        <div class="weather">
+        <i class="fa-solid fa-cloud" id="cloud"></i>
+        <h1 class="temp">22°C
+</h1>
+        <h2 class="city">New York</h2>
+        <div class="details">
+            <div class="col">
+        <i id="icon" class="fa-solid fa-water"></i>
+        <div>
+            <p class="humidity">50%</p>
+            <p>Humidity</p>
+        </div>
+            </div>
+
+
+            <div class="col">
+        <i id="icon" class="fa-solid fa-wind"></i>
+        <div>
+            <p class="wind">50km/hr</p>
+            <p>Wind Speed</p>
+        </div>
+            </div>
+        </div>
+        </div>
+    </div>
+    <script>
+    alert("Hey I am Pratik AI. Enter your Location to know Weather Condition in Your area.")
+        const apiKey = "446f1848e0252d064b4141b48e6013a8";
+        const apiUrl = "https://api.openweathermap.org/data/2.5/weather?units=metric&q="
+        const searchBox = document.querySelector(".search input");
+        const searchBtn = document.querySelector(".search button");
+        const weatherIcon = document.getElementById("cloud");
+
+        async function checkWeather(city){
+            const response = await fetch(apiUrl + city + `&appid=${apiKey}`);
+
+            var data = await response.json();
+            
+
+            document.querySelector(".city").innerHTML = data.name;
+            document.querySelector(".temp").innerHTML = Math.round(data.main.temp) + "°C";
+            document.querySelector(".humidity").innerHTML = data.main.humidity + "%";
+            document.querySelector(".wind").innerHTML = data.wind.speed + "Km/hr"; 
+
+            const weatherIcon = document.getElementById("cloud");
+
+if (data.weather[0].main === "Clouds") {
+  weatherIcon.className = "fa-solid fa-cloud"; 
+  weatherIcon.style.color = "#fff";
+   weatherIcon.style.fontSize = "80px";
+} else if (data.weather[0].main === "Clear") {
+  weatherIcon.className = "fa-solid fa-sun"; 
+  weatherIcon.style.color = "#facc15";
+} else if (data.weather[0].main === "Rain") {
+  weatherIcon.className = "fa-solid fa-cloud-showers-heavy"; 
+  weatherIcon.style.color = "#fff";
+} else if (data.weather[0].main === "Snow") {
+  weatherIcon.className = "fa-solid fa-snowflake"; 
+} else if (data.weather[0].main === "Thunderstorm") {
+  weatherIcon.className = "fa-solid fa-bolt"; 
+} else {
+  weatherIcon.className = "fa-solid fa-smog"; 
+}
+   
+    document.querySelector(".weather").style.display = "block";
+
+        }
+
+        searchBtn.addEventListener("click", ()=>{
+            checkWeather(searchBox.value);
+        })
+        
+    </script>
+</body>
+</html>
