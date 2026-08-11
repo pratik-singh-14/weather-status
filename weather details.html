@@ -194,7 +194,7 @@ body {
         </div>
     </div>
     <script>
-    alert("Hey I am Pratik AI. Enter your Location to know Weather Condition in Your area.")
+    alert("Hey I am Pratik SinghAI. Enter your Location to know Weather Condition in Your area.")
         const apiKey = "446f1848e0252d064b4141b48e6013a8";
         const apiUrl = "https://api.openweathermap.org/data/2.5/weather?units=metric&q="
         const searchBox = document.querySelector(".search input");
@@ -205,7 +205,7 @@ body {
             const response = await fetch(apiUrl + city + `&appid=${apiKey}`);
 
             var data = await response.json();
-            
+             
 
             document.querySelector(".city").innerHTML = data.name;
             document.querySelector(".temp").innerHTML = Math.round(data.main.temp) + "°C";
